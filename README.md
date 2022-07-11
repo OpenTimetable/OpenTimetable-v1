@@ -24,7 +24,7 @@ OTTF file consist of version and other 2 major parts [`cues`](#cues) (define wee
 
 ```json
 {
-  "version:"1.0",
+  "version": "1.0",
   "cues": {
     ...
   },

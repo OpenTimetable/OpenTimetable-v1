@@ -20,10 +20,11 @@
 OTTF file format was created in 2022 by [ClassCompanion Team](https://github.com/ClassCompanion) in order to standardize the way of providing school timetables for applications and websites. It's a JSON file format with strict guidelines in order to keep it as simple as possible.
 
 ## File structure in general
-OTTF file consist of 2 major parts [`cues`](#cues) (define week periods and their duration) and [`days`](#days) (define what classes for each day are there in set periods).
+OTTF file consist of version and other 2 major parts [`cues`](#cues) (define week periods and their duration) and [`days`](#days) (define what classes for each day are there in set periods).
 
 ```json
 {
+  "version:"1.0",
   "cues": {
     ...
   },
@@ -38,35 +39,18 @@ Objects defined by our standard.
 
 **Please note that all timestamps must be in a 24-hour `HH.mm` format and all the dates must be in a `YYYY-MM-DD` (ISO-8601) format.**
 
-#### Period
-Period object is used to define a timespan of classes.
+#### Span
+Period object is used to define a timespan of either periods or recesses.
 
-| Field | Datatype  | Description                      | Example |
-| ----: | --------- | -------------------------------- | ------: |
-|    no | `Integer` | Sequence number of a period.     |       1 |
-|  from | `String`  | Start time of a class (`HH.mm`). |   06.40 |
-|    to | `String`  | End time of a class (`HH.mm`).   |   07.20 |
+| Field | Datatype | Description                      | Example |
+| ----: | -------- | -------------------------------- | ------: |
+|  from | `String` | Start time of a class (`HH.mm`). |   06.40 |
+|    to | `String` | End time of a class (`HH.mm`).   |   07.20 |
 
 ```json
 {
-  "no": 1,
   "from": "06.40",
   "to": "07.25"
-}
-```
-
-#### Recess
-Recess object is used to define timespan of recesses.
-
-| Field | Datatype | Description                       | Example |
-| ----: | -------- | --------------------------------- | ------: |
-|  from | `String` | Start time of a recess (`HH.mm`). |   10.45 |
-|    to | `String` | End time of a recess (`HH.mm`).   |   11.05 |
-
-```json
-{
-  "from": "10.45",
-  "to": "11.05"
 }
 ```
 
@@ -75,9 +59,9 @@ Class object is used to define a school period in a specific day in a week.
 
 |        Field | Datatype       | Description                                     |   Example |
 | -----------: | -------------- | ----------------------------------------------- | --------: |
-|           no | `Integer`      | Sequence number of a corresponding period.      |         3 |
 | substitution | `Boolean`      | True if a substitute host is hosting the class. |     false |
 |  examination | `Boolean`      | True if there is an examination planned.        |     false |
+|     canceled | `Boolean`      | True if class is canceled.                      |     false |
 |         name | `String`       | Name of a class.                                | Chemistry |
 | abbreviation | `String`       | Abbreviation of a class name.                   |       CHM |
 |     location | `String`       | Where is the class hosted.                      |     Lab 2 |
@@ -85,9 +69,9 @@ Class object is used to define a school period in a specific day in a week.
 
 ```json
 {
-  "no": 3,
   "substitution": false,
   "examination": false,
+  "canceled": false,
   "name": "Chemistry",
   "abbreviation": "CHM",
   "location": "Lab 2",
@@ -141,45 +125,26 @@ Special kind of event that last the whole day.
 ```
 
 ## Cues
-`Cues` consists of [`Pre-periods`](#pre-periods), [`Class periods`](#class-periods) and [`Recesses`](#recesses).
+`Cues` consists of [`periods`](#periods) and [`Recesses`](#recesses).
 
 ```json
 {
+  ...,
   "cues": {
-    "preperiods": [
-      {
-        "no": 1,
-        "from": "06.40",
-        "to": "07.25"
-      }
-    ],
-    "periods": [
-      {
-        "no": 1,
+    "periods": {
+      "1": {
         "from": "07.30",
         "to": "08.15"
       },
-      {
-        "no": 2,
+      "2": {
         "from": "08.20",
         "to": "09.05"
       },
-      {
-        "no": 3,
+      "3": {
         "from": "09.10",
         "to": "09.55"
-      },
-      {
-        "no": 4,
-        "from": "10.00",
-        "to": "10.45"
-      },
-      {
-        "no": 5,
-        "from": "11.05",
-        "to": "11.50"
       }
-    ],
+    },
     "recesses": [
       {
         "from": "10.45",
@@ -191,45 +156,27 @@ Special kind of event that last the whole day.
 }
 ```
 
-### Pre-periods
-Pre-periods are timespans for given classes before the first class.
-
-#### Structure
-`preperiods` element is an array containing [`period objects`](#period).
-
-```json
-"preperiods": [
-  {
-    "no": 1,
-    "from": "06.40",
-    "to": "07.25"
-  },
-  ...
-]
-```
-
 ### Periods
 Periods are timespans for given classes throughout the day.
 
 #### Structure
-`periods` element is an array containing [`period objects`](#period).
+`periods` element maps [`span objects`](#span) with corresponding sequence number of a period.
 
 ```json
-"periods": [
-  {
-    "no": 2,
-    "from": "08.20",
-    "to": "09.05"
+"periods": {
+  "1": {
+    "from": "07.30",
+    "to": "08.15"
   },
   ...
-]
+}
 ```
 
 ### Recesses
 Recesses throughout the day.
 
 #### Structure
-`recesses` element is an array containing [`recess objects`](#recess).
+`recesses` element is an array containing [`span objects`](#span).
 
 ```json
 "recesses": [
@@ -242,9 +189,9 @@ Recesses throughout the day.
 ```
 
 ## Days
-`Days` is a map with day abbreviations (MON, TUE, WED, THU, FRI, SAT, SUN) as keys and `Day` objects as values.
+`Days` is a maps day abbreviations (MON, TUE, WED, THU, FRI, SAT, SUN) to corresponding `Day` objects.
 
-Day object consists of `date` (date in ISO-8601 standard), [`preclasses`](#pre-classes), [`classes`](#classes), [`events`](#events) and [`dayevents`](#day-events).
+Day object consists of `date` (date in ISO-8601 standard), [`classes`](#classes), [`events`](#events) and [`dayevents`](#day-events).
 
 ```json
 {
@@ -252,31 +199,32 @@ Day object consists of `date` (date in ISO-8601 standard), [`preclasses`](#pre-c
   "days": {
     "TUE": {
       "date": "2022-02-07",
-      "preclasses": [],
-      "classes": [
-        {
-          "no": 1,
-          "substitution": false,
-          "examination": false,
-          "name": "Computer Science",
-          "abbreviation": "CS",
-          "location": "Computer Lab 4",
-          "hosts": [
-            "Terry C. Bavis"
-          ]
-        },
-        {
-          "no": 2,
-          "substitution": true,
-          "examination": false,
-          "name": "Poetry",
-          "abbreviation": "POE",
-          "location": "Class 34",
-          "hosts": [
-            "Not Karen Senior"
-          ]
-        }
-      ],
+      "classes": {
+        "1": [
+          {
+            "substitution": false,
+            "examination": false,
+            "name": "Computer Science",
+            "abbreviation": "CS",
+            "location": "Computer Lab 4",
+            "hosts": [
+              "Terry C. Bavis"
+            ]
+          }
+        ],
+        "3": [
+          {
+            "substitution": true,
+            "examination": false,
+            "name": "Poetry",
+            "abbreviation": "POE",
+            "location": "Class 34",
+            "hosts": [
+              "Not Karen Senior"
+            ]
+          }
+        ]
+      },
       "events": [],
       "dayevents": []
     }
@@ -284,51 +232,28 @@ Day object consists of `date` (date in ISO-8601 standard), [`preclasses`](#pre-c
 }
 ```
 
-### Pre-classes
-Pre-classes are classes before first class.
-
-#### Structure
-`preclasses` element is an array containing [`class objects`](#class).
-
-```json
-"preclasses": [
-  {
-    "no": 1,
-    "substitution": false,
-    "examination": false,
-    "name": "Physical Education",
-    "abbreviation": "PE",
-    "location": "GYM 1",
-    "hosts": [
-      "Joe Schmoe",
-      "Karen Karen"
-    ]
-  },
-  ...
-]
-```
-
 ### Classes
 Classes are classes throughout the day.
 
 #### Structure
-`classes` element is an array containing [`class objects`](#class).
+`classes` element maps an id of [`span object`](#span) from [`periods`](#periods) with an array of corresponsing [`class objects`](#class) (since there can be multiple classes with the same timespan).
 
 ```json
-"classes": [
-  {
-    "no": 1,
-    "substitution": false,
-    "examination": true,
-    "name": "Mathematics",
-    "abbreviation": "MAT",
-    "location": "Class 23",
-    "hosts": [
-      "Joe Schmoe II."
-    ]
-  },
+"classes": {
+  "1": [
+    {
+      "substitution": false,
+      "examination": true,
+      "name": "Mathematics",
+      "abbreviation": "MAT",
+      "location": "Class 23",
+      "hosts": [
+        "Joe Schmoe II."
+      ]
+    }
+  ],
   ...
-]
+}
 ```
 
 ### Events

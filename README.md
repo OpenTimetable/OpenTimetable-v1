@@ -17,10 +17,10 @@
 </div>
 
 ## About Open Timetable
-OTTF file format was created in 2022 by [ClassCompanion Team](https://github.com/ClassCompanion) in order to standardize the way of providing school timetables for applications and websites. It's a JSON file format with strict guidelines in order to keep it as simple as possible.
+The OTTF file format was created in 2022 by [ClassCompanion Team](https://github.com/ClassCompanion) in order to standardize the way of providing school timetables for applications and websites. It's a JSON file format with strict guidelines in order to keep it as simple as possible.
 
 ## File structure in general
-OTTF file consist of version and other 2 major parts [`cues`](#cues) (define week periods and their duration) and [`days`](#days) (define what classes for each day are there in set periods).
+An OTTF file consist of it's version and other 2 major parts [`cues`](#cues) (define week periods and their duration) and [`days`](#days) (define what classes for each day are there in set periods).
 
 ```json
 {
@@ -37,7 +37,7 @@ OTTF file consist of version and other 2 major parts [`cues`](#cues) (define wee
 ### Objects
 Objects defined by our standard.
 
-**Please note that all timestamps must be in a 24-hour `HH.mm` format and all the dates must be in a `YYYY-MM-DD` (ISO-8601) format.**
+**Please note that all timestamps must be in a 24-hour `HH.mm` format and all the dates must be in a `YYYY-MM-DD` (ISO-8601) format. All times should also be in UTC.**
 
 #### Span
 Period object is used to define a timespan of either periods or recesses.
@@ -82,7 +82,7 @@ Class object is used to define a school period in a specific day in a week.
 ```
 
 #### Event
-Speccial occasion during the day.
+Special occasion during the day.
 
 |    Field | Datatype       | Description                        |                Example |
 | -------: | -------------- | ---------------------------------- | ---------------------: |
@@ -176,7 +176,7 @@ Periods are timespans for given classes throughout the day.
 Recesses throughout the day.
 
 #### Structure
-`recesses` element is an array containing [`span objects`](#span).
+`recesses` element is an array containing [`span`](#span) objects.
 
 ```json
 "recesses": [
@@ -278,7 +278,7 @@ Events are special occasions such as school event or holidays.
 ```
 
 ### Day events
-Events are special type of event that lasts a whole day, therefore it doesn't have defined timespan.
+Events are special type of event that lasts a whole day, therefore it doesn't have a defined timespan.
 
 #### Structure
 `dayevents` element is an array containing [`day event objects`](#day-event).

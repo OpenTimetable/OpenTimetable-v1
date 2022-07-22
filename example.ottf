@@ -1,39 +1,27 @@
 {
 	"cues": {
-		"preperiods": [
-			{
-				"no": 1,
-				"from": "06.40",
-				"to": "07.25"
-			}
-		],
-		"periods": [
-			{
-				"no": 1,
+		"periods": {
+			"1": {
 				"from": "07.30",
 				"to": "08.15"
 			},
-			{
-				"no": 2,
+			"2": {
 				"from": "08.20",
 				"to": "09.05"
 			},
-			{
-				"no": 3,
+			"3": {
 				"from": "09.10",
 				"to": "09.55"
 			},
-			{
-				"no": 4,
+			"4": {
 				"from": "10.00",
 				"to": "10.45"
 			},
-			{
-				"no": 5,
+			"5": {
 				"from": "11.05",
 				"to": "11.50"
 			}
-		],
+		},
 		"recesses": [
 			{
 				"from": "10.45",
@@ -41,58 +29,47 @@
 			}
 		]
 	},
-	"days": {
-		"MON": {
+	"days": [
+		{
 			"date": "2022-02-06",
-			"preclasses": [
-				{
-					"no": 1,
-					"substitution": false,
-					"examination": false,
-					"name": "Phisical Education",
-					"abbreviation": "PE",
-					"location": "GYM 1",
-					"hosts": [
-						"Joe Schmoe",
-						"Karen Karen"
-					]
-				}
-			],
-			"classes": [
-				{
-					"no": 1,
-					"substitution": false,
-					"examination": true,
-					"name": "Maths",
-					"abbreviation": "MAT",
-					"location": "Class 23",
-					"hosts": [
-						"Joe Schmoe II."
-					]
-				},
-				{
-					"no": 2,
-					"substitution": false,
-					"examination": false,
-					"name": "Poetry",
-					"abbreviation": "POE",
-					"location": "Class 34",
-					"hosts": [
-						"Karen Karen Junior"
-					]
-				},
-				{
-					"no": 3,
-					"substitution": false,
-					"examination": false,
-					"name": "Chemistry",
-					"abbreviation": "CHM",
-					"location": "Lab 2",
-					"hosts": [
-						"NileRed"
-					]
-				}
-			],
+			"classes": {
+				"1": [
+					{
+						"substitution": false,
+						"examination": true,
+						"name": "Maths",
+						"abbreviation": "MAT",
+						"location": "Class 23",
+						"hosts": [
+							"Joe Schmoe II."
+						]
+					}
+				],
+				"2": [
+					{
+						"substitution": false,
+						"examination": false,
+						"name": "Poetry",
+						"abbreviation": "POE",
+						"location": "Class 34",
+						"hosts": [
+							"Karen Karen Junior"
+						]
+					}
+				],
+				"3": [
+					{
+						"substitution": false,
+						"examination": false,
+						"name": "Chemistry",
+						"abbreviation": "CHM",
+						"location": "Lab 2",
+						"hosts": [
+							"NileRed"
+						]
+					}
+				]
+			},
 			"events": [
 				{
 					"from": "08.05",
@@ -105,42 +82,41 @@
 					]
 				}
 			],
-			"dayevents": [
-			]
+			"dayevents": []
 		},
-		"TUE": {
+		{
 			"date": "2022-02-07",
-			"preclasses": [],
-			"classes": [
-				{
-					"no": 1,
-					"substitution": false,
-					"examination": false,
-					"name": "Computer Science",
-					"abbreviation": "CS",
-					"location": "Computer Lab 4",
-					"hosts": [
-						"Terry C. Bavis"
-					]
-				},
-				{
-					"no": 2,
-					"substitution": true,
-					"examination": false,
-					"name": "Poetry",
-					"abbreviation": "POE",
-					"location": "Class 34",
-					"hosts": [
-						"Not Karen Senior"
-					]
-				}
-			],
+			"classes": {
+				"1": [
+					{
+						"substitution": false,
+						"examination": false,
+						"name": "Computer Science",
+						"abbreviation": "CS",
+						"location": "Computer Lab 4",
+						"hosts": [
+							"Terry C. Bavis"
+						]
+					}
+				],
+				"2": [
+					{
+						"substitution": true,
+						"examination": false,
+						"name": "Poetry",
+						"abbreviation": "POE",
+						"location": "Class 34",
+						"hosts": [
+							"Not Karen Senior"
+						]
+					}
+				]
+			},
 			"events": [],
 			"dayevents": []
 		},
-		"WED": {
+		{
 			"date": "2022-02-08",
-			"preclasses": [],
 			"classes": [],
 			"events": [],
 			"dayevents": [
@@ -153,5 +129,5 @@
 				}
 			]
 		}
-	}
+	]
 }

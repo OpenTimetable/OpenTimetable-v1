@@ -44,6 +44,17 @@
 						"hosts": [
 							"Joe Schmoe II."
 						]
+					},
+					{
+						"substitution": false,
+						"examination": true,
+						"canceled": true,
+						"name": "Poetry",
+						"abbreviation": "POE",
+						"location": "Class 34",
+						"hosts": [
+							"Karen Karen Junior"
+						]
 					}
 				],
 				"2": [
@@ -120,7 +131,7 @@
 			"dayevents": []
 		},
 		"2022-02-08": {
-			"classes": [],
+			"classes": {},
 			"events": [],
 			"dayevents": [
 				{

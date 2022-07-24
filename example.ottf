@@ -1,5 +1,10 @@
 {
-	"version": "1.0",
+	"metadata": {
+		"version": "1.0",
+		"timezone": "UTC",
+		"author": "Doc Author",
+		"created": "2022-02-06"
+	},
 	"cues": {
 		"periods": {
 			"1": {

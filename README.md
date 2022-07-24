@@ -191,14 +191,13 @@ Recesses throughout the day.
 ## Days
 `Days` is a maps day abbreviations (MON, TUE, WED, THU, FRI, SAT, SUN) to corresponding `Day` objects.
 
-Day object consists of `date` (date in ISO-8601 standard), [`classes`](#classes), [`events`](#events) and [`dayevents`](#day-events).
+Day object consists of [`classes`](#classes), [`events`](#events) and [`dayevents`](#day-events) and is a map where the key is a date in yyyy-mm-dd format specified by the ISO8601 standard.
 
 ```json
 {
   ...,
   "days": {
-    "TUE": {
-      "date": "2022-02-07",
+    "2022-02-07": {
       "classes": {
         "1": [
           {

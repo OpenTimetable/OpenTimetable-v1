@@ -20,11 +20,13 @@
 The OTTF file format was created in 2022 by [ClassCompanion Team](https://github.com/ClassCompanion) in order to standardize the way of providing school timetables for applications and websites. It's a JSON file format with strict guidelines in order to keep it as simple as possible.
 
 ## File structure in general
-An OTTF file consist of it's version and other 2 major parts [`cues`](#cues) (define week periods and their duration) and [`days`](#days) (define what classes for each day are there in set periods).
+An OTTF file consist of 3 parts [`metadata`](#metadata) (details about document), [`cues`](#cues) (define week periods and their duration), and [`days`](#days) (define what classes for each day are there in set periods).
 
 ```json
 {
-  "version: "1.0",
+  "metadata": {
+    ...
+  },
   "cues": {
     ...
   },
@@ -37,7 +39,26 @@ An OTTF file consist of it's version and other 2 major parts [`cues`](#cues) (de
 ### Objects
 Objects defined by our standard.
 
-**Please note that all timestamps must be in a 24-hour `HH.mm` format and all the dates must be in a `YYYY-MM-DD` (ISO-8601) format. All times should also be in UTC.**
+**Please note that all times must be in a 24-hour `HH.mm` format and all the dates must be in a `YYYY-MM-DD` (ISO-8601) format.**
+
+#### Metadata
+Metadata object provides information about the document.
+
+|     Field | Datatype | Description                                     |    Example |
+| --------: | -------- | ----------------------------------------------- | ---------: |
+|   version | `String` | OTTF specification version.                     |        1.0 |
+|  timezone | `String` | Timezone of timestamps.                         |        UTC |
+|    author | `String` | Document author.                                | Doc Author |
+| timestamp | `Long`   | Document creation epoch timestamp (in seconds). |     123456 |
+
+```json
+{
+  "version": "1.0",
+	"timezone": "UTC",
+	"author": "Doc Author",
+	"timestamp": 123456
+}
+```
 
 #### Span
 Period object is used to define a timespan of either periods or recesses.
@@ -189,9 +210,9 @@ Recesses throughout the day.
 ```
 
 ## Days
-`Days` is a maps day abbreviations (MON, TUE, WED, THU, FRI, SAT, SUN) to corresponding `Day` objects.
+`Days` dates with `Day` objects.
 
-Day object consists of [`classes`](#classes), [`events`](#events) and [`dayevents`](#day-events) and is a map where the key is a date in yyyy-mm-dd format specified by the ISO8601 standard.
+Day object consists of [`classes`](#classes), [`events`](#events) and [`dayevents`](#day-events).
 
 ```json
 {
@@ -235,7 +256,7 @@ Day object consists of [`classes`](#classes), [`events`](#events) and [`dayevent
 Classes are classes throughout the day.
 
 #### Structure
-`classes` element maps an id of [`span object`](#span) from [`periods`](#periods) with an array of corresponsing [`class objects`](#class) (since there can be multiple classes with the same timespan).
+`classes` element maps an id of [`span object`](#span) from [`periods`](#periods) with an array of corresponsing array of [`class`](#class) objects (since there can be multiple classes with the same timespan).
 
 ```json
 "classes": {

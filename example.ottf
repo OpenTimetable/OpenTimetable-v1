@@ -3,7 +3,7 @@
 		"version": "1.0",
 		"timezone": "UTC",
 		"author": "Doc Author",
-		"created": "2022-02-06"
+		"timestamp": 123456
 	},
 	"cues": {
 		"periods": {

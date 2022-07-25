@@ -54,9 +54,9 @@ Metadata object provides information about the document.
 ```json
 {
   "version": "1.0",
-	"timezone": "UTC",
-	"author": "Doc Author",
-	"timestamp": 123456
+  "timezone": "UTC",
+  "author": "Doc Author",
+  "timestamp": 123456
 }
 ```
 
